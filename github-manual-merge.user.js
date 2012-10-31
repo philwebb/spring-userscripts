@@ -88,11 +88,17 @@ var branch       = document.evaluate("div/p/span[2]/span[2]",
 var requestnumber= document.evaluate("div/div/span[2]",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim().substring(1);
+var status       = document.evaluate("div/span/span",
+						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+						.singleNodeValue.textContent.trim();
+
 
 // Insert our new div element
 
-var mergeDiv = document.createElement('div');
-mergeDiv.setAttribute("class", "pull-head");
-mergeDiv.setAttribute("style", "padding: 10px;");
-pullHeaderElement.parentNode.insertBefore(mergeDiv, pullHeaderElement.nextSibling);
-updateMergeDivContent();
+if(status != 'Closed') {
+	var mergeDiv = document.createElement('div');
+	mergeDiv.setAttribute("class", "pull-head");
+	mergeDiv.setAttribute("style", "padding: 10px;");
+	pullHeaderElement.parentNode.insertBefore(mergeDiv, pullHeaderElement.nextSibling);
+	updateMergeDivContent();
+}
