@@ -2,7 +2,8 @@
 // @name        github-manual-merge
 // @namespace   http://springsource.org
 // @description Adds manual merge commands to pull requests
-// @include     https://github.com/SpringSource/spring-framework/pull/*
+// @include     https://github.com/*/*/pull/*
+// @include     http://github.com/*/*/pull/*
 // @version     1
 // @grant		none
 // ==/UserScript==
