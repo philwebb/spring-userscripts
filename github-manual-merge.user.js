@@ -37,18 +37,18 @@ function updateMergeDivContent() {
 		'git remote add ' + username + ' https://github.com/' + username + '/' + repository + '.git\n');
 		mergeInfo.push(
 			'git fetch ' + username + '\n'+
-			'git checkout --track ' + username + '/' + branch + ' -b ' + branch + "\n");
+			'git checkout --track ' + username + '/' + remotebranch + ' -b ' + localbranch + "\n");
 	} else {
 		mergeInfo.push(
-			'git fetch https://github.com/' + username + '/' + repository + '.git ' + branch + '\n' +
-			'git checkout -b ' + branch + ' FETCH_HEAD\n');
+			'git fetch https://github.com/' + username + '/' + repository + '.git ' + remotebranch + '\n' +
+			'git checkout -b ' + localbranch + ' FETCH_HEAD\n');
 	}
 	mergeInfo.push(
 		'git rebase master\n');
 	mergeInfo.push(
 		'git checkout master\n');
 	mergeInfo.push(
-		'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + branch + '" ' + branch + "\n");
+		'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" ' + localbranch + "\n");
 
 	mergeDiv.innerHTML = "";
 	var toggleFetchStyleDiv = document.createElement('div');
@@ -83,7 +83,7 @@ for (i=0; i<metas.length; i++) {
 var username     = document.evaluate("div/p/span[2]/span/span",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim();
-var branch       = document.evaluate("div/p/span[2]/span[2]",
+var remotebranch = document.evaluate("div/p/span[2]/span[2]",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim();
 var requestnumber= document.evaluate("div/div/span[2]",
@@ -92,7 +92,7 @@ var requestnumber= document.evaluate("div/div/span[2]",
 var status       = document.evaluate("div/span/span",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim();
-
+var localbranch  = (remotebranch === 'master' ? ('pull' + requestnumber) : remotebranch);
 
 // Insert our new div element
 
