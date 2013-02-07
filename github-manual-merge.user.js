@@ -44,9 +44,9 @@ function updateMergeDivContent() {
 			'git checkout -b ' + localbranch + ' FETCH_HEAD\n');
 	}
 	mergeInfo.push(
-		'git rebase master\n');
+		'git rebase ' + targetbranch + '\n');
 	mergeInfo.push(
-		'git checkout master\n');
+		'git checkout ' + targetbranch + '\n');
 	mergeInfo.push(
 		'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" ' + localbranch + "\n");
 
@@ -83,6 +83,9 @@ for (i=0; i<metas.length; i++) {
 var username     = document.evaluate("div/p/span[2]/span/span",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim();
+var targetbranch = document.evaluate("div/p/span[1]/span[2]",
+						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+						.singleNodeValue.textContent.trim();
 var remotebranch = document.evaluate("div/p/span[2]/span[2]",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim();
@@ -92,7 +95,7 @@ var requestnumber= document.evaluate("div/div/span[2]",
 var status       = document.evaluate("div/span/span",
 						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
 						.singleNodeValue.textContent.trim();
-var localbranch  = (remotebranch === 'master' ? ('pull' + requestnumber) : remotebranch);
+var localbranch  = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
 
 // Insert our new div element
 
