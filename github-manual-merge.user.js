@@ -52,9 +52,9 @@ function updateMergeDivContent() {
 
 	mergeDiv.innerHTML = "";
 	var toggleFetchStyleDiv = document.createElement('div');
-	toggleFetchStyleDiv.setAttribute("style", "float: right; cursor: pointer; cursor: hand;");
+	toggleFetchStyleDiv.setAttribute("style", "float: right; cursor: pointer; cursor: hand; color: #999999;");
 	toggleFetchStyleDiv.addEventListener("click", toggleFetchStyle, false);
-	toggleFetchStyleDiv.innerHTML = '<span class="mini-icon mini-icon-refresh"> </span>';
+	toggleFetchStyleDiv.innerHTML = '<span class="octicon octicon-gear"> </span>';
 	mergeDiv.appendChild(toggleFetchStyleDiv);
 
 	for (var i = 0; i < mergeInfo.length; i++) {
