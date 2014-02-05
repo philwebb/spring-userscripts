@@ -2,8 +2,8 @@
 // @name        github-hide-automerge
 // @namespace   http://springsource.org
 // @description Hide auto-merge option in github
-// @include     https://github.com/SpringSource/spring-framework/pull/*
-// @include     http://github.com/SpringSource/spring-framework/pull/*
+// @include     https://github.com/*/*/pull/*
+// @include     http://github.com/*/*/pull/*
 // @version     1
 // @grant		none
 // ==/UserScript==

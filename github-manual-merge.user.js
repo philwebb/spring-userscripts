@@ -70,7 +70,7 @@ function updateMergeDivContent() {
 
 // Grab variables we need from the page
 
-var pullHeaderElement = document.getElementById("pull-head")
+var discussionHeaderElement = document.getElementById("js-discussion-header")
 var metas = document.getElementsByTagName('meta'); 
 
 var repository
@@ -80,29 +80,20 @@ for (i=0; i<metas.length; i++) {
     } 
 } 
 
-var username     = document.evaluate("div/p/span[2]/span/span",
-						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-						.singleNodeValue.textContent.trim();
-var targetbranch = document.evaluate("div/p/span[1]/span[2]",
-						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-						.singleNodeValue.textContent.trim();
-var remotebranch = document.evaluate("div/p/span[2]/span[2]",
-						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-						.singleNodeValue.textContent.trim();
-var requestnumber= document.evaluate("div/div/span[2]",
-						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-						.singleNodeValue.textContent.trim().substring(1);
-var status       = document.evaluate("div/span/span",
-						pullHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-						.singleNodeValue.textContent.trim();
+var username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
+var branches = document.evaluate("div[3]/span/span[2]", discussionHeaderElement, null, XPathResult.ANY_TYPE, null);
+var targetbranch = branches.iterateNext().textContent.trim();
+var remotebranch = branches.iterateNext().textContent.trim();
+var requestnumber = document.evaluate(".//*[contains(@class, 'gh-header-number')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim().substring(1);
+var status = document.evaluate(".//*[contains(@class, 'gh-header-status')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 var localbranch  = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
 
 // Insert our new div element
 
 if(status != 'Closed') {
 	var mergeDiv = document.createElement('div');
-	mergeDiv.setAttribute("class", "pull-head");
-	mergeDiv.setAttribute("style", "padding: 10px;");
-	pullHeaderElement.parentNode.insertBefore(mergeDiv, pullHeaderElement.nextSibling);
+    mergeDiv.setAttribute("class", "timeline-comment-header");
+    mergeDiv.setAttribute("style", "padding: 10px 10px; margin-top: 10px; border: 1px solid #EEEEEE;");
+	discussionHeaderElement.parentNode.insertBefore(mergeDiv, discussionHeaderElement.nextSibling);
 	updateMergeDivContent();
 }
