@@ -76,7 +76,8 @@ var metas = document.getElementsByTagName('meta');
 var repository
 for (i=0; i<metas.length; i++) { 
 	if (metas[i].getAttribute("property") == "og:title") { 
-    	repository = metas[i].getAttribute("content"); 
+        repository = metas[i].getAttribute("content");
+        repository = repository.substr(repository.indexOf('/')+1);
     } 
 } 
 
