@@ -9,15 +9,15 @@
 // ==/UserScript==
 
 function selectText(e) {
-    if (document.selection) {
-        var range = document.body.createTextRange();
-        range.moveToElementText(this);
-        range.select();
-    } else if (window.getSelection) {
-        var range = document.createRange();
-        range.selectNode(this);
-        window.getSelection().addRange(range);
-    }
+	if (document.selection) {
+		var range = document.body.createTextRange();
+		range.moveToElementText(this);
+		range.select();
+	} else if (window.getSelection) {
+		var range = document.createRange();
+		range.selectNode(this);
+		window.getSelection().addRange(range);
+	}
 }
 
 function toggleFetchStyle(e) {
@@ -76,10 +76,10 @@ var metas = document.getElementsByTagName('meta');
 var repository
 for (i=0; i<metas.length; i++) { 
 	if (metas[i].getAttribute("property") == "og:title") { 
-        repository = metas[i].getAttribute("content");
-        repository = repository.substr(repository.indexOf('/')+1);
-    } 
-} 
+		repository = metas[i].getAttribute("content");
+		repository = repository.substr(repository.indexOf('/')+1);
+	}
+}
 
 var username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discussionHeaderElement, null, XPathResult.ANY_TYPE, null);
@@ -93,8 +93,8 @@ var localbranch = (remotebranch === targetbranch ? ('pull' + requestnumber) : re
 
 if(status != 'Closed') {
 	var mergeDiv = document.createElement('div');
-    mergeDiv.setAttribute("class", "timeline-comment-header");
-    mergeDiv.setAttribute("style", "padding: 10px 10px; margin-top: 10px; border: 1px solid #EEEEEE;");
+	mergeDiv.setAttribute("class", "timeline-comment-header");
+	mergeDiv.setAttribute("style", "padding: 10px 10px; margin-top: 10px; border: 1px solid #EEEEEE;");
 	discussionHeaderElement.parentNode.insertBefore(mergeDiv, discussionHeaderElement.nextSibling);
 	updateMergeDivContent();
 }
