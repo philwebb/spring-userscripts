@@ -82,12 +82,12 @@ for (i=0; i<metas.length; i++) {
 } 
 
 var username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
-var branches = document.evaluate("div[3]/span/span[2]", discussionHeaderElement, null, XPathResult.ANY_TYPE, null);
-var targetbranch = branches.iterateNext().textContent.trim();
-var remotebranch = branches.iterateNext().textContent.trim();
+var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discussionHeaderElement, null, XPathResult.ANY_TYPE, null);
+var targetbranch = branches.iterateNext().children[1].textContent.trim();
+var remotebranch = branches.iterateNext().children[1].textContent.trim();
 var requestnumber = document.evaluate(".//*[contains(@class, 'gh-header-number')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim().substring(1);
-var status = document.evaluate(".//*[contains(@class, 'gh-header-status')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
-var localbranch  = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
+var status = document.evaluate(".//*[contains(@class, 'state-indicator')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
+var localbranch = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
 
 // Insert our new div element
 
