@@ -86,7 +86,7 @@ var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discuss
 var targetbranch = branches.iterateNext().children[1].textContent.trim();
 var remotebranch = branches.iterateNext().children[1].textContent.trim();
 var requestnumber = document.evaluate(".//*[contains(@class, 'gh-header-number')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim().substring(1);
-var status = document.evaluate(".//*[contains(@class, 'state-indicator')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
+var status = document.evaluate(".//*[contains(@class, 'state')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 var localbranch = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
 
 // Insert our new div element
