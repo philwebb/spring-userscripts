@@ -70,7 +70,7 @@ function updateMergeDivContent() {
 
 // Grab variables we need from the page
 
-var discussionHeaderElement = document.getElementById("js-discussion-header")
+var discussionHeaderElement = document.getElementById("partial-discussion-header")
 var metas = document.getElementsByTagName('meta'); 
 
 var repository
