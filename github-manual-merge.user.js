@@ -22,7 +22,11 @@ function selectText(e) {
 
 function toggleFetchStyle(e) {
 	var fetchstyle = localStorage['github-manual-merge-fetchstyle'] || 'default';
-	fetchstyle = (fetchstyle === 'default' ? 'small' : 'default');
+	switch(fetchstyle) {
+		case 'default' : fetchstyle = 'small'; break;
+		case 'small'   : fetchstyle = 'pr'; break;
+		case 'pr'      : fetchstyle = 'default'; break;
+	}
 	localStorage['github-manual-merge-fetchstyle'] = fetchstyle;
 	updateMergeDivContent();
 }
@@ -32,23 +36,38 @@ function updateMergeDivContent() {
 	var fetchstyle = localStorage['github-manual-merge-fetchstyle'] || 'default';
 
 	var mergeInfo = new Array();
-	if(fetchstyle === 'default') {
-	mergeInfo.push(
-		'git remote add ' + username + ' https://github.com/' + username + '/' + repository + '.git\n');
+	if (fetchstyle === 'default') {
+		mergeInfo.push(
+			'git remote add ' + username + ' https://github.com/' + username + '/' + repository + '.git\n');
 		mergeInfo.push(
 			'git fetch ' + username + '\n'+
 			'git checkout --track ' + username + '/' + remotebranch + ' -b ' + localbranch + "\n");
-	} else {
+		mergeInfo.push(
+			'git rebase ' + targetbranch + '\n');
+		mergeInfo.push(
+			'git checkout ' + targetbranch + '\n');
+		mergeInfo.push(
+			'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" ' + localbranch + "\n");
+	} else if (fetchstyle === 'small') {
 		mergeInfo.push(
 			'git fetch https://github.com/' + username + '/' + repository + '.git ' + remotebranch + '\n' +
 			'git checkout -b ' + localbranch + ' FETCH_HEAD\n');
+		mergeInfo.push(
+			'git rebase ' + targetbranch + '\n');
+		mergeInfo.push(
+			'git checkout ' + targetbranch + '\n');
+		mergeInfo.push(
+			'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" ' + localbranch + "\n");
+	} else {
+		mergeInfo.push(
+			'git checkout pr/' + requestnumber + '\n');
+		mergeInfo.push(
+			'git rebase ' + targetbranch + '\n');
+		mergeInfo.push(
+			'git checkout ' + targetbranch + '\n');
+		mergeInfo.push(
+			'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" pr/' + requestnumber + "\n");
 	}
-	mergeInfo.push(
-		'git rebase ' + targetbranch + '\n');
-	mergeInfo.push(
-		'git checkout ' + targetbranch + '\n');
-	mergeInfo.push(
-		'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" ' + localbranch + "\n");
 
 	mergeDiv.innerHTML = "";
 	var toggleFetchStyleDiv = document.createElement('div');
