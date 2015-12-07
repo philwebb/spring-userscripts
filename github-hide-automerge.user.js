@@ -2,12 +2,22 @@
 // @name        github-hide-automerge
 // @namespace   http://springsource.org
 // @description Hide auto-merge option in github
-// @include     https://github.com/*/*/pull/*
-// @include     http://github.com/*/*/pull/*
+// @include     https://github.com/*/*
+// @include     http://github.com/*/*
 // @version     1
 // @grant		none
 // ==/UserScript==
-try {
-	document.getElementById("js-pull-merging").getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.display = 'none';
-} catch(e) {
-}
+(function(unsafeWindow) {
+
+	function apply() {
+		try {
+			$(".js-merge-branch-action").hide();
+		} catch(e) {
+		}
+	}
+
+	unsafeWindow.$(document).on("pjax:end", function() {
+	    apply()
+	});
+    apply();
+})(typeof unsafeWindow !== "undefined" ? unsafeWindow : window);
