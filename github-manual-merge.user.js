@@ -30,15 +30,9 @@
 		}
 		if(window.location.href.indexOf("/pull/") > -1) {
 			// Grab variables we need from the page
-			var discussionHeaderElement = document.getElementById("partial-discussion-header")
-			var metas = document.getElementsByTagName('meta'); 
-			repository = [];
-			for (i=0; i<metas.length; i++) { 
-				if (metas[i].getAttribute("property") == "og:title") { 
-					repository = metas[i].getAttribute("content");
-					repository = repository.substr(repository.indexOf('/')+1);
-				}
-			}
+			var discussionHeaderElement = document.getElementById("partial-discussion-header");
+			var metas = document.getElementsByTagName('meta');
+			repository = document.querySelectorAll('button.clone-url-link')[0].getAttribute('data-url');
 			username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 			var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discussionHeaderElement, null, XPathResult.ANY_TYPE, null);
 			targetbranch = branches.iterateNext().children[1].textContent.trim();
@@ -87,8 +81,9 @@
 			mergeInfo.push(
 				'git remote add ' + username + ' https://github.com/' + username + '/' + repository + '.git\n');
 			mergeInfo.push(
-				'git fetch ' + username + '\n'+
-				'git checkout --track ' + username + '/' + remotebranch + ' -b ' + localbranch + "\n");
+				'git fetch ' + username + '\n');
+			mergeInfo.push(
+				'git checkout --track ' + username + '/' + remotebranch + ' -b ' + localbranch + '\n');
 			mergeInfo.push(
 				'git rebase ' + targetbranch + '\n');
 			mergeInfo.push(
