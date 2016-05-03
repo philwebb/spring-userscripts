@@ -32,13 +32,7 @@
 			// Grab variables we need from the page
 			var discussionHeaderElement = document.getElementById("partial-discussion-header");
 			var metas = document.getElementsByTagName('meta');
-			repository = [];
-			for (i=0; i<metas.length; i++) {
-				if (metas[i].getAttribute("property") == "og:title") {
-					repository = metas[i].getAttribute("content");
-					repository = repository.substr(repository.indexOf('/')+1);
-				}
-			}
+			repository = document.querySelectorAll('button.clone-url-link')[0].getAttribute('data-url');
 			username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 			var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discussionHeaderElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 			targetbranch = branches.iterateNext().children[1].textContent.trim();
