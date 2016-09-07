@@ -80,7 +80,7 @@
 		var mergeInfo = new Array();
 		if (fetchstyle === 'default') {
 			mergeInfo.push(
-				'git remote add ' + username + ' https://github.com/' + username + '/' + repository + '.git\n');
+				'git remote add ' + username + ' ' + repository + '\n');
 			mergeInfo.push(
 				'git fetch ' + username + '\n' +
 				'git checkout --track ' + username + '/' + remotebranch + ' -b ' + localbranch + '\n');
@@ -92,7 +92,7 @@
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '/' + remotebranch + '" ' + localbranch + '\n');
 		} else if (fetchstyle === 'small') {
 			mergeInfo.push(
-				'git fetch https://github.com/' + username + '/' + repository + '.git ' + remotebranch + '\n' +
+				'git fetch ' + repository + ' ' + remotebranch + '\n' +
 				'git checkout -b ' + localbranch + ' FETCH_HEAD\n');
 			mergeInfo.push(
 				'git rebase ' + targetbranch + '\n');
