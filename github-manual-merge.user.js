@@ -42,7 +42,7 @@
 			localbranch = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
 
 			// Insert our new div element
-			var status = document.evaluate(".//*[contains(@class, 'state')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
+			var status = document.evaluate(".//*[contains(@class, 'State')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 			if(status != 'Closed') {
 				discussionHeaderElement.parentNode.insertBefore(mergeDiv, discussionHeaderElement.nextSibling);
 				updateMergeDivContent();
