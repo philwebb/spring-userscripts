@@ -5,7 +5,7 @@
 // @include     https://github.com/*/*
 // @include     http://github.com/*/*
 // @version     1
-// @grant		none
+// @grant       none
 // ==/UserScript==
 
 (function() {
@@ -21,6 +21,6 @@
         head.appendChild(style);
     }
 
-    addGlobalStyle('.label { line-height: 1.4 !important; font-size: 11px !important; }');
-    addGlobalStyle('.css-truncate-target { max-width: 180px !important; }');
+    addGlobalStyle('div.labels a.label { line-height: 1.4 !important; font-size: 11px !important; }');
+    addGlobalStyle('a span.css-truncate-target { max-width: 180px !important; }');
 })();
