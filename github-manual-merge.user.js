@@ -5,7 +5,7 @@
 // @include     https://github.com/*/*
 // @include     http://github.com/*/*
 // @version     1
-// @grant		none
+// @grant       none
 // ==/UserScript==
 (function() {
 
@@ -39,7 +39,7 @@
                 branches.iterateNext();
                 remotebranch = branches.iterateNext().children[1].textContent.trim();
                 requestnumber = document.evaluate(".//*[contains(@class, 'gh-header-number')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim().substring(1);
-                localbranch = (remotebranch === targetbranch ? ('pull' + requestnumber) : remotebranch);
+                localbranch = 'gh-' + requestnumber;
                 updateMergeDivContent();
             }
         }
@@ -78,7 +78,7 @@
                 'git remote add ' + username + ' ' + repository + '\n');
             mergeInfo.push(
                 'git fetch ' + username + '\n' +
-                'git checkout --track ' + username + '/' + remotebranch + ' -b ' + localbranch + '\n');
+                'git checkout -b ' + localbranch + ' ' + username + '/' + remotebranch + '\n');
             mergeInfo.push(
                 'git rebase ' + targetbranch + '\n');
             mergeInfo.push(
@@ -97,13 +97,13 @@
                 'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
         } else {
             mergeInfo.push(
-                'git checkout pr/' + requestnumber + '\n');
+                'git checkout -b ' + localbranch + ' pr/' + requestnumber + '\n');
             mergeInfo.push(
                 'git rebase ' + targetbranch + '\n');
             mergeInfo.push(
                 'git checkout ' + targetbranch + '\n');
             mergeInfo.push(
-                'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" pr/' + requestnumber + '\n');
+                'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
         }
 
         mergeDiv.innerHTML = "";
