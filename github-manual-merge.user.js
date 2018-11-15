@@ -39,7 +39,7 @@
                 branches.iterateNext();
                 remotebranch = branches.iterateNext().children[1].textContent.trim();
                 requestnumber = document.evaluate(".//*[contains(@class, 'gh-header-number')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim().substring(1);
-                localbranch = 'gh-' + requestnumber;
+                localbranch = 'pr/' + requestnumber;
                 updateMergeDivContent();
             }
         }
@@ -97,7 +97,7 @@
                 'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
         } else {
             mergeInfo.push(
-                'git checkout -b ' + localbranch + ' pr/' + requestnumber + '\n');
+                'git checkout ' + localbranch + '\n');
             mergeInfo.push(
                 'git rebase ' + targetbranch + '\n');
             mergeInfo.push(
