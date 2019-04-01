@@ -35,9 +35,9 @@
 				repository = document.querySelectorAll('button.clone-url-link')[0].getAttribute('data-url');
 				username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 				var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discussionHeaderElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-				targetbranch = branches.iterateNext().children[1].textContent.trim();
+				targetbranch = branches.iterateNext().children[0].children[1].textContent.trim();
 				branches.iterateNext();
-				remotebranch = branches.iterateNext().children[1].textContent.trim();
+				remotebranch = branches.iterateNext().children[0].children[1].textContent.trim();
 				requestnumber = document.evaluate(".//*[contains(@class, 'gh-header-number')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim().substring(1);
 				localbranch = 'pr/' + requestnumber;
 				updateMergeDivContent();
