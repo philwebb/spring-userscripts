@@ -62,15 +62,16 @@
 		switch(fetchstyle) {
 			case 'default' : fetchstyle = 'small'; break;
 			case 'small'   : fetchstyle = 'pr'; break;
-			case 'pr'      : fetchstyle = 'default'; break;
+			case 'pr'      : fetchstyle = 'alias'; break;
+			case 'alias'   : fetchstyle = 'default'; break;
 		}
 		localStorage['github-manual-merge-fetchstyle'] = fetchstyle;
 		updateMergeDivContent();
 	}
 
 	function updateMergeDivContent() {
-        var mergeDiv = document.getElementById("github-manual-merge");
-        var fetchstyle = localStorage['github-manual-merge-fetchstyle'] || 'default';
+		var mergeDiv = document.getElementById("github-manual-merge");
+		var fetchstyle = localStorage['github-manual-merge-fetchstyle'] || 'default';
 
 		var mergeInfo = new Array();
 		if (fetchstyle === 'default') {
@@ -85,6 +86,8 @@
 				'git checkout ' + targetbranch + '\n');
 			mergeInfo.push(
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
+			mergeInfo.push(
+				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-17005")"');
 		} else if (fetchstyle === 'small') {
 			mergeInfo.push(
 				'git fetch ' + repository + ' ' + remotebranch + '\n' +
@@ -95,6 +98,17 @@
 				'git checkout ' + targetbranch + '\n');
 			mergeInfo.push(
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
+			mergeInfo.push(
+				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-17005")"');
+		} else if (fetchstyle === 'alias') {
+			mergeInfo.push(
+				'git checkout ' + localbranch + '\n');
+			mergeInfo.push(
+				'git rebase ' + targetbranch + '\n');
+			mergeInfo.push(
+				'git checkout ' + targetbranch + '\n');
+			mergeInfo.push(
+				'git mergepr ' + localbranch + '\n');
 		} else {
 			mergeInfo.push(
 				'git checkout ' + localbranch + '\n');
@@ -104,6 +118,8 @@
 				'git checkout ' + targetbranch + '\n');
 			mergeInfo.push(
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
+			mergeInfo.push(
+				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-17005")"');
 		}
 
 		mergeDiv.innerHTML = "";
