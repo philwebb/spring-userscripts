@@ -21,16 +21,16 @@
 		if (!mergeDiv) {
 			mergeDiv = document.createElement('div');
 			mergeDiv.setAttribute("id", "github-manual-merge");
-			mergeDiv.setAttribute("class", "timeline-comment-header");
-			mergeDiv.setAttribute("style", "padding: 10px 10px; margin-bottom: 12px; border: 1px solid #EEEEEE;");
+			mergeDiv.setAttribute("style", "padding: 10px 10px; margin-bottom: 12px; border: 1px solid #EEEEEE; background-color: #f6f8fa;");
 		}
 
-		var discussionTimelineElememt = document.getElementById("discussion_bucket");
+		var discussionBucket = document.getElementById("discussion_bucket");
+		var discussionTimelineElememt = document.evaluate(".//*[contains(@class, 'discussion-timeline')]", discussionBucket, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 		if(window.location.href.indexOf("/pull/") > -1 && discussionTimelineElememt) {
 			var discussionHeaderElement = document.getElementById("partial-discussion-header");
 			var status = document.evaluate(".//*[contains(@class, 'State')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 			if(status != 'Closed') {
-				discussionTimelineElememt.insertBefore(mergeDiv, discussionTimelineElememt.firstChild);
+				discussionTimelineElememt.parentElement.insertBefore(mergeDiv, discussionTimelineElememt);
 				var metas = document.getElementsByTagName('meta');
 				repository = document.querySelectorAll('button.clone-url-link')[0].getAttribute('data-url');
 				username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
