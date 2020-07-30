@@ -32,7 +32,9 @@
 			if(status != 'Closed') {
 				discussionTimelineElememt.parentElement.insertBefore(mergeDiv, discussionTimelineElememt);
 				var metas = document.getElementsByTagName('meta');
-				repository = document.querySelectorAll('button.clone-url-link')[0].getAttribute('data-url');
+				var headRefElement = document.evaluate(".//*[contains(@class, 'head-ref')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+				var headRefTitle = headRefElement.title;
+				repository = "https://github.com/" + headRefTitle.match("(.*):")[1];
 				username = document.evaluate(".//*[contains(@class, 'author')]", discussionHeaderElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.textContent.trim();
 				var branches = document.evaluate(".//*[contains(@class, 'commit-ref')]", discussionHeaderElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 				targetbranch = branches.iterateNext().children[0].children[1].textContent.trim();
