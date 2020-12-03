@@ -89,7 +89,7 @@
 			mergeInfo.push(
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
 			mergeInfo.push(
-				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-17005")"');
+				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses ' + requestnumber + '")"');
 		} else if (fetchstyle === 'small') {
 			mergeInfo.push(
 				'git fetch ' + repository + ' ' + remotebranch + '\n' +
@@ -101,7 +101,7 @@
 			mergeInfo.push(
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
 			mergeInfo.push(
-				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-17005")"');
+				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses ' + requestnumber + '")"');
 		} else if (fetchstyle === 'alias') {
 			mergeInfo.push(
 				'git checkout ' + localbranch + '\n');
@@ -121,7 +121,7 @@
 			mergeInfo.push(
 				'git merge --no-ff --log -m "Merge pull request #' + requestnumber + ' from ' + username + '" ' + localbranch + '\n');
 			mergeInfo.push(
-				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-17005")"');
+				'git commit --amend -m"$(git log --format=%B -n1)$(echo "\\n\\nCloses gh-' + requestnumber + ')"');
 		}
 
 		mergeDiv.innerHTML = "";
