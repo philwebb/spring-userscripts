@@ -9,7 +9,7 @@
 
 (function() {
 
-    'use strict';
+    'use strict'
 
     function githubSignOnAll(rootElement, ssoContinue) {
         const ssoSectionElement = rootElement?.querySelector("section[aria-labelledby='single-sign-on']")
@@ -46,7 +46,7 @@
 
     function performGitHubSignOn(ssoAnchorElements) {
         const href = ssoAnchorElements[0]?.href
-        if(href) {
+        if (href) {
             window.location.href = `${href}&sso-continue=true&sso-count=${ssoAnchorElements.length}`
         }
     }
