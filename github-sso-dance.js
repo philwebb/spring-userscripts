@@ -2,7 +2,8 @@
 // @name        github-sso-dance
 // @namespace   http://springsource.org
 // @description Adds manual merge commands to pull requests
-// @include     https://github.com/**
+// @include     https://github.com/notifications**
+// @include     https://github.com/orgs/*/sso**
 // @version     1
 // @grant       none
 // ==/UserScript==
